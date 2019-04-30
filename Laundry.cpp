@@ -1,7 +1,9 @@
 #include <iostream>
 #include <windows.h>
 using namespace std;
+typedef struct{
 
+}pelanggan;
 string username,pass,nama[300];
 char kode[300],choose,bersihkan;
 int code[300];
