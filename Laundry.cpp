@@ -1,14 +1,16 @@
 #include <iostream>
 #include <windows.h>
 using namespace std;
+int banyakdata=1;
 typedef struct{
-
-}pelanggan;
-string username,pass,nama[300];
-char kode[300],choose,bersihkan;
-int code[300];
-int pilih,banyakdata,layanan[300],lama[300],harga[300],tambahdata,pilout,unik;
-float berat[300];
+	string nama;
+	int layanan, lama, harga;
+	float berat;
+	char kode[3];	
+}pelanggan[banyakdata];
+string username,pass;
+char choose,bersihkan;
+int pilih,tambahdata,pilout,unik;
 
 void login (){
 	do{
