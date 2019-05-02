@@ -4,8 +4,8 @@ using namespace std;
 int banyakdata=1;
 typedef struct{
 	string nama;
-	int layanan, lama, harga;
-	float berat;
+	int layanan, lama;
+	float berat, harga;
 	char kode[3];	
 }pelanggan[banyakdata];
 string username,pass;
@@ -30,19 +30,21 @@ void input(){
 	cout<<"Input data Menu"<<endl;
 	cout<<"Banyak data = ";
 	cin>>banyakdata;
+	pelanggan datapelanggan[banyakdata];
+	cin.ignore();
 	for(int i = 0;i<banyakdata;i++){
 		cout<<i+1<<"	"<<"Nama = ";
-			cin>>nama[i];
+			getline(cin,datapelanggan[i].nama);
 		cout<<"	Pilih layanan"<<endl;
 		cout<<"		1.Clean & Clear"<<endl<<"		2.Cuci & Keringkan"<<endl;
 		cout<<"		3.Setrika"<<endl;
 		cout<<"		Pil(1-3) = ";
-			cin>>layanan[i];
+			cin>>datapelanggan[i].layanan;
 		cout<<"	Lama Laundry"<<endl;
 		cout<<"		1.Reguler (3 hari)"<<endl<<"		2.One Day service"<<endl;
 		cout<<"		3.Super Kilat"<<endl;
 		cout<<"		Pil(1-3) = ";
-			cin>>lama[i];
+			cin>>datapelanggan[i].lama;
 		cout<<"	Masukkan berat cucian"<<endl;
 		int y=0;
 		while(y<3){
@@ -50,51 +52,51 @@ void input(){
 		y++;}
 		cout<<"	*Jika Berat <2Kg, hitungan akan sama dengan 2kg";
 		cout<<"	\n	Masukkan berat laundry= ";
-			cin>>berat[i];
-				if(berat[i]<2){
-				berat[i]=2;
+			cin>>datapelanggan[i].berat;
+				if(datapelanggan[i].berat<2){
+				datapelanggan[i].berat=2;
 				}
 	
 	cout<<"\n	Total biaya yang harus dibayar : Rp ";
-		if(layanan[i]==1 && lama[i]==1){
-			harga[i]=berat[i]*4500;
-			cout<<harga[i];
+		if(datapelanggan[i].layanan==1 && datapelanggan[i].lama==1){
+			datapelanggan[i].harga=datapelanggan[i].berat*4500;
+			cout<<datapelanggan[i].harga;
 		}
-		else if(layanan[i]==1 && lama[i]==2){
-			harga[i]=berat[i]*6000;
-			cout<<harga[i];
+		else if(datapelanggan[i].layanan==1 && datapelanggan[i].lama==2){
+			datapelanggan[i].harga=datapelanggan[i].berat*6000;
+			cout<<datapelanggan[i].harga;
 		}
-			else if(layanan[i]==1 && lama[i]==3){
-				harga[i]=berat[i]*8000;
-				cout<<harga[i];
+			else if(datapelanggan[i].layanan==1 && datapelanggan[i].lama==3){
+				datapelanggan[i].harga=datapelanggan[i].berat*8000;
+				cout<<datapelanggan[i].harga;
 			}
-				else if(layanan[i]==2 && lama[i]==1){
-					harga[i]=berat[i]*3500;
-					cout<<harga[i];
+				else if(datapelanggan[i].layanan==2 && datapelanggan[i].lama==1){
+					datapelanggan[i].harga=datapelanggan[i].berat*3500;
+					cout<<datapelanggan[i].harga;
 				}
-					else if(layanan[i]==2 && lama[i]==2){
-						harga[i]=berat[i]*5000;
-						cout<<harga[i];
+					else if(datapelanggan[i].layanan==2 && datapelanggan[i].lama==2){
+						datapelanggan[i].harga=datapelanggan[i].berat*5000;
+						cout<<datapelanggan[i].harga;
 					}
-						else if(layanan[i]==2 && lama[i]==3){
-							harga[i]=berat[i]*7000;
-							cout<<harga[i];
+						else if(datapelanggan[i].layanan==2 && datapelanggan[i].lama==3){
+							datapelanggan[i].harga=datapelanggan[i].berat*7000;
+							cout<<datapelanggan[i].harga;
 						}
-							else if(layanan[i]==3 && lama[i]==1){
-								harga[i]=berat[i]*1500;
-								cout<<harga[i];
+							else if(datapelanggan[i].layanan==3 && datapelanggan[i].lama==1){
+								datapelanggan[i].harga=datapelanggan[i].berat*1500;
+								cout<<datapelanggan[i].harga;
 							}
-								else if(layanan[i]==3 && lama[i]==2){
-									harga[i]=berat[i]*2000;
-									cout<<harga[i];
+								else if(datapelanggan[i].layanan==3 && datapelanggan[i].lama==2){
+									datapelanggan[i].harga=datapelanggan[i].berat*2000;
+									cout<<datapelanggan[i].harga;
 								}
-									else if(layanan[i]==3 && lama[i]==3){
-										harga[i]=berat[i]*3000;
-										cout<<harga[i];
+									else if(datapelanggan[i].layanan==3 && datapelanggan[i].lama==3){
+										datapelanggan[i].harga=datapelanggan[i].berat*3000;
+										cout<<datapelanggan[i].harga;
 									}
 										else 
 											cout<<"Ada input yang salah";
-		cout<<"\n 	Kode unik anda = "<<i+1;
+		/*cout<<"\n 	Kode unik anda = "<<i+1;
 		if(layanan[i]==1){
 			kode[i]='A';
 			cout<<kode[i];
@@ -122,7 +124,7 @@ void input(){
 					cout<<code[i]<<endl;
 				}
 					else
-						cout<<"Ada yang salah";
+						cout<<"Ada yang salah";*/
 		
 	}
 }
