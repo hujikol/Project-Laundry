@@ -15,9 +15,11 @@ string username,pass,n_file;
 char choose,bersihkan;
 int pilih,tambahdata,pilout,unik;
 
-void ambil_data(string n_file){
+void ambil_data(){
 	int j=0;
-ambil.open(n_file.c_str());
+	string carifile;
+	cout<<"Cari file yang akan diambil : ";cin>>carifile;
+ambil.open(carifile.c_str());
 	pelanggan data[banyakdata];
 	while(!ambil.eof()){
 		getline(cin,data[j].nama);
@@ -223,6 +225,23 @@ void add(){
 		
 	}
 }
+void ngesort(){
+	ambil_data();
+	int pilihansort;
+	cout<<"Menu Sorting/Mengurutkan data"<<endl;
+	cout<<"Pilih yang hendak di sorting"<<endl;
+		cout<<"	1.Nama Pelanggan"<<endl;
+		cout<<"	2.Berat"<<endl;
+	cout<<"Pil : ";cin>>pilihansort;
+	switch(pilihansort){
+		case 1 : 
+			
+		break;
+		case 2 :
+		
+		break;
+	}
+}
 
 void output(){
 	
@@ -313,11 +332,7 @@ int main(){
 	cout<<"================Welcome to Nagi Laundry======================"<<endl;
 	cout<<"Please login"<<endl;
 	login();
-	for(int i=0;i<=200;i++){
-		nama[i]="BELUM DI INPUT!";
-		layanan[i]=0;
-		lama[i]=0;
-	}
+	
 system("CLS");
 	cout<<"================Welcome to main menu========================="<<endl;
 	cout<<"Choose what you want to do next"<<endl;
@@ -345,7 +360,7 @@ system("CLS");
 			cin>>choose;
 				system("CLS");
 				
-	while (choose=='y'){
+	while (choose=='y'|| choose=='Y'){
 			cout<<"================Welcome to main menu========================="<<endl;
 	cout<<"Choose what you want to do next"<<endl;
 	cout<<"1. Add data"<<endl;
