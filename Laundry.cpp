@@ -28,6 +28,8 @@ void login (){
 
 void input(){
 	cout<<"Input data Menu"<<endl;
+	cout<<"Masukkan nama file = ";
+	cin>>n_file; simpan.open(n_file.c_str(),ios::app);
 	cout<<"Banyak data = ";
 	cin>>banyakdata;
 	pelanggan datapelanggan[banyakdata];
@@ -96,39 +98,12 @@ void input(){
 									}
 										else 
 											cout<<"Ada input yang salah";
-		/*cout<<"\n 	Kode unik anda = "<<i+1;
-		if(layanan[i]==1){
-			kode[i]='A';
-			cout<<kode[i];
-		}
-			else if(layanan[i]==2){
-				kode[i]='B';
-				cout<<kode[i];
-			}
-				else if(layanan[i]==3){
-					kode[i]='C';
-					cout<<kode[i];
-				}
-					else
-						cout<<"Ada yang salah";
-		if(lama[i]==1){
-			code[i]=lama[i];
-			cout<<code[i]<<endl;
-		}
-			else if(lama[i]==2){
-				code[i]=lama[i];
-				cout<<code[i]<<endl;
-			}
-				else if(lama[i]==3){
-					code[i]=lama[i];
-					cout<<code[i]<<endl;
-				}
-					else
-						cout<<"Ada yang salah";*/
+		simpan<<datapelanggan[i].nama<<endl<<datapelanggan[i].layanan<<endl<<datapelanggan[i].lama<<endl
+			  <<datapelanggan[i].berat<<endl<<datapelanggan[i].harga<<endl;
+		simpan.close();
 		
 	}
 }
-
 void add(){
 	cout<<"Tambahan data"<<endl;
 	cout<<"Banyak data tambahan = ";
