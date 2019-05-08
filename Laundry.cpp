@@ -1,6 +1,9 @@
 #include <iostream>
 #include <windows.h>
+#include <fstream>
 using namespace std;
+ifstream ambil;
+ofstream simpan;
 int banyakdata=1;
 typedef struct{
 	string nama;
@@ -8,9 +11,25 @@ typedef struct{
 	float berat, harga;
 	char kode[3];	
 }pelanggan[banyakdata];
-string username,pass;
+string username,pass,n_file;
 char choose,bersihkan;
 int pilih,tambahdata,pilout,unik;
+
+void ambil_data(string n_file){
+	int j=0;
+ambil.open(n_file.c_str());
+	pelanggan data[banyakdata];
+	while(!ambil.eof()){
+		getline(cin,data[j].nama);
+		cin>>data[j].layanan;
+		cin>>data[j].lama;
+		cin>>data[j].berat;
+		cin>>data[j].harga;
+		j++;
+		banyakdata++;
+	}
+ambil.close();
+}
 
 void login (){
 	do{
@@ -33,9 +52,8 @@ void input(){
 	cout<<"Banyak data = ";
 	cin>>banyakdata;
 	pelanggan datapelanggan[banyakdata];
-	cin.ignore();
 	for(int i = 0;i<banyakdata;i++){
-		cout<<i+1<<"	"<<"Nama = ";
+		cout<<endl<<i+1<<"	"<<"Nama = ";cin.ignore();
 			getline(cin,datapelanggan[i].nama);
 		cout<<"	Pilih layanan"<<endl;
 		cout<<"		1.Clean & Clear"<<endl<<"		2.Cuci & Keringkan"<<endl;
