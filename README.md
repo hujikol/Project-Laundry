@@ -1,2 +1,9 @@
 # laundrygan
-tugasakhir sem1
+tugasakhir sem2
+
+yang kurang :
+- searching
+- kode unik
+- sorting
+- pointer
+- rekursif
