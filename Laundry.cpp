@@ -72,7 +72,7 @@ string jajal;
 	if(a==5){
 		cout<<"\n	Kode Unik Anda = "<<jajal<<"	(Harap simpan baik\" nanti untuk pengambilan)\n";
 	}
-	ke=&jajal;
+	*ke=jajal;
 }
 
 void input(){
