@@ -1,24 +1,25 @@
 #include <iostream>
 #include <windows.h>
 #include <fstream>
+#include <string.h>
+#include <ctime>
 using namespace std;
 ifstream ambil;
 ofstream simpan;
-int banyakdata=1;
+int banyakdata=0;
 typedef struct{
-	string nama;
+	string nama,kode;
 	int layanan, lama;
-	float berat, harga;
-	char kode[3];	
-}pelanggan[banyakdata];
+	float berat, harga;	
+}pelanggan;
 string username,pass,n_file;
 char choose,bersihkan;
-int pilih,tambahdata,pilout,unik;
+int pilih,tambahdata,pilout,unik,log;
 
 void ambil_data(){
 	int j=0;
 	string carifile;
-	cout<<"Cari file yang akan diambil : ";cin>>carifile;
+	cout<<"Nama file yang akan diambil : ";cin>>carifile;
 ambil.open(carifile.c_str());
 	pelanggan data[banyakdata];
 	while(!ambil.eof()){
@@ -26,7 +27,8 @@ ambil.open(carifile.c_str());
 		cin>>data[j].layanan;
 		cin>>data[j].lama;
 		cin>>data[j].berat;
-		cin>>data[j].harga;
+		cin>>data[j].harga;cin.ignore();
+		cin>>data[j].kode;
 		j++;
 		banyakdata++;
 	}
@@ -35,9 +37,9 @@ ambil.close();
 
 void login (){
 	do{
-	cout << "Masukkan Nama Admin = ";
+	cout << "User     = ";
 		cin >> username;
-	cout<< "Masukkan Pass = ";
+	cout<< "Password = ";
 		cin >> pass;
 		if(username=="admin"&& pass=="sukses")
 			cout<<"Berhasil login"<<endl;
@@ -47,16 +49,48 @@ void login (){
 	}while (username!="admin"|| pass!="sukses"); 
 }
 
+string randomString(int maxLength = 5, string charIndex = "abcdefghijklmnaoqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
+{
+    int length = rand() % maxLength + 2;
+    int indexesOfRandomChars[15];
+    for (int i = 0; i < length; ++i)
+        indexesOfRandomChars[i] = rand() % charIndex.length();
+    string randomString = "";
+    for (int i = 0; i < length; ++i){
+        randomString += charIndex[indexesOfRandomChars[i]];
+    } 
+    return randomString;
+}
+
+void kode(string *hasil){
+int a;
+string jajal;
+    srand(time(NULL));
+    while(a!=5){
+		jajal=randomString();
+    	a=jajal.length();}
+	if(a==5){
+		char wadah[a],baskom[3]; strcpy(wadah,jajal.c_str());
+    	for(int i=0;i<5;i++)
+			baskom[i]=wadah[i];
+		string berhasil;
+		berhasil=baskom;cout<<"\n	Kode Unik Anda = "<<berhasil<<"	(Harap simpan baik\" nanti untuk pengambilan)\n";
+		hasil=&berhasil;
+	}
+}
+
 void input(){
+	int bnyk_data;
 	cout<<"Input data Menu"<<endl;
 	cout<<"Masukkan nama file = ";
 	cin>>n_file; simpan.open(n_file.c_str(),ios::app);
 	cout<<"Banyak data = ";
-	cin>>banyakdata;
+	cin>>bnyk_data;
 	pelanggan datapelanggan[banyakdata];
-	for(int i = 0;i<banyakdata;i++){
-		cout<<endl<<i+1<<"	"<<"Nama = ";cin.ignore();
-			getline(cin,datapelanggan[i].nama);
+	for(int i = 0;i<bnyk_data;i++){
+		cout<<endl<<i+1<<"	"<<"Nama = ";
+		cin.ignore();
+		getline(cin,datapelanggan[i].nama);
 		cout<<"	Pilih layanan"<<endl;
 		cout<<"		1.Clean & Clear"<<endl<<"		2.Cuci & Keringkan"<<endl;
 		cout<<"		3.Setrika"<<endl;
@@ -78,7 +112,6 @@ void input(){
 				if(datapelanggan[i].berat<2){
 				datapelanggan[i].berat=2;
 				}
-	
 	cout<<"\n	Total biaya yang harus dibayar : Rp ";
 		if(datapelanggan[i].layanan==1 && datapelanggan[i].lama==1){
 			datapelanggan[i].harga=datapelanggan[i].berat*4500;
@@ -118,113 +151,17 @@ void input(){
 									}
 										else 
 											cout<<"Ada input yang salah";
+	string oke;
+	kode(&oke);
+	datapelanggan[i].kode=oke;
+	
 		simpan<<datapelanggan[i].nama<<endl<<datapelanggan[i].layanan<<endl<<datapelanggan[i].lama<<endl
-			  <<datapelanggan[i].berat<<endl<<datapelanggan[i].harga<<endl;
+			  <<datapelanggan[i].berat<<endl<<datapelanggan[i].harga<<endl<<datapelanggan[i].kode<<endl;
 		simpan.close();
 		
 	}
 }
-void add(){
-	cout<<"Tambahan data"<<endl;
-	cout<<"Banyak data tambahan = ";
-		cin>>tambahdata;
-	banyakdata=banyakdata+tambahdata;
-		for(int i= banyakdata-tambahdata;i<banyakdata;i++){
-			cout<<i+1<<"	"<<"Nama = ";
-				cin>>nama[i];
-			cout<<"	Pilih layanan"<<endl;
-			cout<<"		1.Clean & Clear"<<endl<<"		2.Cuci & Keringkan"<<endl;
-			cout<<"		3.Setrika"<<endl;
-			cout<<"		Pil(1-3) = ";
-				cin>>layanan[i];
-			cout<<"	Lama Laundry"<<endl;
-			cout<<"		1.Reguler (3 hari)"<<endl<<"		2.One Day service"<<endl;
-			cout<<"		3.Super Kilat"<<endl;
-			cout<<"		Pil(1-3) = ";
-				cin>>lama[i];
-			cout<<"	Masukkan berat cucian"<<endl;
-			int y=0;
-			while(y<3){
-				cout<<"	ALERT!!!!!!"<<endl;
-				y++;}
-			cout<<"\n	*Jika Berat <2Kg, hitungan akan sama dengan 2kg";
-			cout<<"	\n	Masukkan berat laundry = ";
-				cin>>berat[i];
-				if(berat[i]<2){
-				berat[i]=2;
-				}
-	
-	cout<<"\n	Total biaya yang harus dibayar : Rp ";
-		if(layanan[i]==1 && lama[i]==1){
-			harga[i]=berat[i]*4500;
-			cout<<harga[i];
-		}
-		else if(layanan[i]==1 && lama[i]==2){
-			harga[i]=berat[i]*6000;
-			cout<<harga[i];
-		}
-			else if(layanan[i]==1 && lama[i]==3){
-				harga[i]=berat[i]*8000;
-				cout<<harga[i];
-			}
-				else if(layanan[i]==2 && lama[i]==1){
-					harga[i]=berat[i]*3500;
-					cout<<harga[i];
-				}
-					else if(layanan[i]==2 && lama[i]==2){
-						harga[i]=berat[i]*5000;
-						cout<<harga[i];
-					}
-						else if(layanan[i]==2 && lama[i]==3){
-							harga[i]=berat[i]*7000;
-							cout<<harga[i];
-						}
-							else if(layanan[i]==3 && lama[i]==1){
-								harga[i]=berat[i]*1500;
-								cout<<harga[i];
-							}
-								else if(layanan[i]==3 && lama[i]==2){
-									harga[i]=berat[i]*2000;
-									cout<<harga[i];
-								}
-									else if(layanan[i]==3 && lama[i]==3){
-										harga[i]=berat[i]*3000;
-										cout<<harga[i];
-									}
-										else 
-											cout<<"Ada input yang salah";
-		cout<<"\n 	Kode unik anda = "<<i+1;
-		if(layanan[i]==1){
-			kode[i]='A';
-			cout<<kode[i];
-		}
-			else if(layanan[i]==2){
-				kode[i]='B';
-				cout<<kode[i];
-		}
-				else if(layanan[i]==3){
-					kode[i]='C';
-					cout<<kode[i];
-		}
-					else
-					cout<<"Ada yang salah";
-		if(lama[i]==1){
-			code[i]=lama[i];
-			cout<<code[i]<<endl;
-		}
-			else if(lama[i]==2){
-				code[i]=lama[i];
-				cout<<code[i]<<endl;
-		}
-				else if(lama[i]==3){
-					code[i]=lama[i];
-					cout<<code[i]<<endl;
-		}
-					else
-					cout<<"Ada yang salah";
-		
-	}
-}
+
 void ngesort(){
 	ambil_data();
 	int pilihansort;
@@ -244,102 +181,157 @@ void ngesort(){
 }
 
 void output(){
-	
-	cout<<"Tampilkan Data\n"<<"Pilihan\n"<<"1. Tampilkan Semua Data\n"<<"2. Tampilkan Data Pilihan\n";
+	string unik,n_cari; int posisi,k,pilih;
+	system("CLS");
+	cout<<"====================================================================\n"
+		<<"============================ Menu Output ===========================\n"
+		<<"====================================================================\n";
+	ambil_data();
+	cout<<"\n1. Tampilkan Semua Data\n"<<"2. Tampilkan Data Pilihan\n";
 	cout<<"Pilihan : ";
 	cin>>pilout;
+	pelanggan data_plg[banyakdata];
 		switch(pilout){
 			case 1:
 				for(int i=0;i<banyakdata;i++){
-					cout<<i+1<<".	Nama = "<<nama[i]<<endl;
+					cout<<i+1<<".	Nama = "<<data_plg[i].nama<<endl;
 					cout<<"	Pesanan dan Layanan\n";
-						if(layanan[i]==1){
-						cout<<"		Clean & Clear";
+						if(data_plg[i].layanan==1){
+							cout<<"		Clean & Clear";
 						}
-						else if(layanan[i]==2){
-						cout<<"		Cuci & Keringkan";
+						else if(data_plg[i].layanan==2){
+							cout<<"		Cuci & Keringkan";
 						}
-						else if(layanan[i]==3){
-						cout<<"		Setrika";
+						else if(data_plg[i].layanan==3){
+							cout<<"		Setrika";
 						}
 						else {
-						cout<<"	Layanan Tidak diketahui";
+							cout<<"	Layanan Tidak diketahui";
 						}
 	
-						if(lama[i]==1){
-						cout<<", Reguler (3 Hari)"<<endl;
+						if(data_plg[i].lama==1){
+							cout<<", Reguler (3 Hari)"<<endl;
 						}
-						else if(lama[i]==2){
-						cout<<", One Day Service"<<endl;
+						else if(data_plg[i].lama==2){
+							cout<<", One Day Service"<<endl;
 						}
-						else if(lama[i]==3){
-						cout<<", Super Kilat"<<endl;
+						else if(data_plg[i].lama==3){
+							cout<<", Super Kilat"<<endl;
 						}
 						else {
-						cout<<", Laundry Tidak akan selesai"<<endl;
+							cout<<", Laundry Tidak akan selesai"<<endl;
 						}
-					cout<<"	Berat laundry = "<<berat[i]<<" Kg"<<endl;
-					cout<<"	Total Bayar = Rp "<<harga[i]<<"-,\n";
+					cout<<"	Berat laundry = "<<data_plg[i].berat<<" Kg"<<endl;
+					cout<<"	Total Bayar = Rp "<<data_plg[i].harga<<"-,\n";
+					cout<<"	Kode UNIK = "<<data_plg[i].kode<<endl;
 				}
 			break;
-			case 2:
-				cout<<"Digit pertama Kode UNIK = ";
-				cin>>unik;
-				unik=unik-1;
-				cout<<"Kode unik = "<<unik+1<<kode[unik]<<code[unik]<<endl;
-				cout<<"	Nama = "<<nama[unik]<<endl;
+			
+			case 2: cout<<"\nMencari berdasarkan apa?\n1. Nama\n2. Kode Unik\nPilihan";cin>>pilih;
+				if(pilih==1){
+				cout<<"Masukkan Nama yang Dicari = ";cin.ignore();getline(cin,n_cari);
+				while(n_cari!=data_plg[k].nama&&k<banyakdata){
+					if(n_cari==data_plg[k].nama){
+					posisi=k;
+					}
+					k++;
+				}
+					cout<<"	Data Saudara "<<data_plg[posisi].nama<<endl;
 					cout<<"	Pesanan dan Layanan\n";
-						if(kode[unik]=='A'){
-						cout<<"		Clean & Clear";
+						if(data_plg[posisi].layanan==1){
+							cout<<"		Clean & Clear";
 						}
-							else if(kode[unik]=='B'){
+						else if(data_plg[posisi].layanan==2){
 							cout<<"		Cuci & Keringkan";
-							}
-								else if(kode[unik]=='C'){
-								cout<<"		Setrika";
-								}
-									else {
-									cout<<"	Layanan Tidak diketahui";
-									}
-	
-						if(code[unik]==1){
-						cout<<", Reguler (3 Hari)"<<endl;
 						}
-							else if(code[unik]==2){
+						else if(data_plg[posisi].layanan==3){
+							cout<<"		Setrika";
+						}
+						else {
+							cout<<"	Layanan Tidak diketahui";
+						}
+	
+						if(data_plg[posisi].lama==1){
+							cout<<", Reguler (3 Hari)"<<endl;
+						}
+						else if(data_plg[posisi].lama==2){
 							cout<<", One Day Service"<<endl;
-							}
-								else if(code[unik]==3){
-								cout<<", Super Kilat"<<endl;
-								}
-									else {
-									cout<<", Laundry Tidak akan selesai"<<endl;
-									}
-					cout<<"	Berat laundry = "<<berat[unik]<<" Kg"<<endl;
-					cout<<"	Total Bayar = Rp "<<harga[unik]<<"-,\n";
+						}
+						else if(data_plg[posisi].lama==3){
+							cout<<", Super Kilat"<<endl;
+						}
+						else {
+							cout<<", Laundry Tidak akan selesai"<<endl;
+						}
+					cout<<"	Berat laundry = "<<data_plg[posisi].berat<<" Kg"<<endl;
+					cout<<"	Total Bayar = Rp "<<data_plg[posisi].harga<<"-,\n";
+					cout<<"	Kode UNIK = "<<data_plg[posisi].kode<<endl;
+				}
+				else if(pilih==2){cout<<"Masukkan Kode UNIK = ";
+				cin>>unik;
+				while(unik!=data_plg[k].kode&&k<banyakdata){
+					if(unik==data_plg[k].kode){
+					posisi=k;
+					}
+					k++;
+				}
+					cout<<"	Data Saudara "<<data_plg[posisi].nama<<endl;
+					cout<<"	Pesanan dan Layanan\n";
+						if(data_plg[posisi].layanan==1){
+							cout<<"		Clean & Clear";
+						}
+						else if(data_plg[posisi].layanan==2){
+							cout<<"		Cuci & Keringkan";
+						}
+						else if(data_plg[posisi].layanan==3){
+							cout<<"		Setrika";
+						}
+						else {
+							cout<<"	Layanan Tidak diketahui";
+						}
+	
+						if(data_plg[posisi].lama==1){
+							cout<<", Reguler (3 Hari)"<<endl;
+						}
+						else if(data_plg[posisi].lama==2){
+							cout<<", One Day Service"<<endl;
+						}
+						else if(data_plg[posisi].lama==3){
+							cout<<", Super Kilat"<<endl;
+						}
+						else {
+							cout<<", Laundry Tidak akan selesai"<<endl;
+						}
+					cout<<"	Berat laundry = "<<data_plg[posisi].berat<<" Kg"<<endl;
+					cout<<"	Total Bayar = Rp "<<data_plg[posisi].harga<<"-,\n";
+					cout<<"	Kode UNIK = "<<data_plg[posisi].kode<<endl;
+				}
 			break;
-			default:
-				cout<<"Input Salah!";
-		}
+			
+			default: cout<<"Input Salah!";break;
 		char x;
 		cout<<"Cek Lagi ? (y/n) ";
 		cin>>x;
 		if(x=='y')
-			output();
-		
+			output();	
+	}
 }
 
 int main(){
-	cout<<"================Welcome to Nagi Laundry======================"<<endl;
-	cout<<"Please login"<<endl;
-	login();
+
+	if(log==0){
+	cout<<"=====================================================================\n"
+		<<"====================== Welcome to Nagi Laundry ======================\n"
+		<<"=====================================================================\n"
+		<<"\nPlease login"<<endl;
+	login();log+=1;}
 	
 system("CLS");
-	cout<<"================Welcome to main menu========================="<<endl;
-	cout<<"Choose what you want to do next"<<endl;
-	cout<<"1. Input data"<<endl;
-	cout<<"2. Check data"<<endl;
-	cout<<"3. Exit"<<endl;
-	cout<<"What you want to do next = ";
+	cout<<"=====================================================================\n"
+		<<"======================== Welcome to Main Menu =======================\n"
+		<<"=====================================================================\n"
+		<<"Choose what you want to do next";
+	cout<<"\n1. Input data\n2. Check data\n3. Exit\nWhat you want to do next = ";
 	cin>>pilih;
 		switch (pilih){
 		case 1 :
@@ -347,10 +339,9 @@ system("CLS");
 		break;
 		case 2 :
 			output();
-			
 		break;
 		case 3:
-			cout<<"================= Terima Kasih ============================";
+			cout<<"============================ Terima Kasih ============================";
 			return 0;
 		break;
 		default:
@@ -359,33 +350,6 @@ system("CLS");
 		cout<<"	Back to menu ?(y/n) = ";
 			cin>>choose;
 				system("CLS");
-				
-	while (choose=='y'|| choose=='Y'){
-			cout<<"================Welcome to main menu========================="<<endl;
-	cout<<"Choose what you want to do next"<<endl;
-	cout<<"1. Add data"<<endl;
-	cout<<"2. Check data"<<endl;
-	cout<<"3. Exit"<<endl;
-	cout<<"What you want to do next = ";
-	cin>>pilih;
-		switch (pilih){
-		case 1 :
-			add();
-		break;
-		case 2 :
-			output();
-		break;
-		case 3:
-			cout<<"================= Terima Kasih ============================";
-			return 0;
-		break;
-		default:
-			cout<<"Input salah";
-		}
-		cout<<"	Back to menu ?(y/n) = ";
-			cin>>choose;
-		
-				system("CLS");
-	}
-	cout<<"================= Terima Kasih ============================";
+		if(choose=='y'||choose=='Y')main();
+	
 }
