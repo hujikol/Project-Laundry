@@ -20,8 +20,9 @@ void ambil_data(){
 	int j=0;
 	string carifile;
 	cout<<"Nama file yang akan diambil : ";cin>>carifile;
-ambil.open(carifile.c_str());
+ifstream ambil(carifile.c_str());
 	pelanggan data[banyakdata];
+	banyakdata=1;
 	while(!ambil.eof()){
 		getline(cin,data[j].nama);
 		cin>>data[j].layanan;
@@ -30,9 +31,8 @@ ambil.open(carifile.c_str());
 		cin>>data[j].harga;cin.ignore();
 		cin>>data[j].kode;
 		j++;
-		banyakdata++;
-	}
-ambil.close();
+		banyakdata=banyakdata+1;
+	}ambil.close();
 }
 
 void login (){
@@ -62,7 +62,7 @@ string randomString(int maxLength = 5, string charIndex = "abcdefghijklmnaoqrstu
     return randomString;
 }
 
-void kode(string *hasil){
+void kode(string *ke){
 int a;
 string jajal;
     srand(time(NULL));
@@ -70,24 +70,21 @@ string jajal;
 		jajal=randomString();
     	a=jajal.length();}
 	if(a==5){
-		char wadah[a],baskom[3]; strcpy(wadah,jajal.c_str());
-    	for(int i=0;i<5;i++)
-			baskom[i]=wadah[i];
-		string berhasil;
-		berhasil=baskom;cout<<"\n	Kode Unik Anda = "<<berhasil<<"	(Harap simpan baik\" nanti untuk pengambilan)\n";
-		hasil=&berhasil;
+		cout<<"\n	Kode Unik Anda = "<<jajal<<"	(Harap simpan baik\" nanti untuk pengambilan)\n";
 	}
+	ke=&jajal;
 }
 
 void input(){
 	int bnyk_data;
 	cout<<"Input data Menu"<<endl;
 	cout<<"Masukkan nama file = ";
-	cin>>n_file; simpan.open(n_file.c_str(),ios::app);
+	cin>>n_file; 
 	cout<<"Banyak data = ";
-	cin>>bnyk_data;
+	cin>>bnyk_data;banyakdata+=bnyk_data;
 	pelanggan datapelanggan[banyakdata];
-	for(int i = 0;i<bnyk_data;i++){
+		string oke[banyakdata];
+	for(int i = 0;i<banyakdata;i++){
 		cout<<endl<<i+1<<"	"<<"Nama = ";
 		cin.ignore();
 		getline(cin,datapelanggan[i].nama);
@@ -151,12 +148,11 @@ void input(){
 									}
 										else 
 											cout<<"Ada input yang salah";
-	string oke;
-	kode(&oke);
-	datapelanggan[i].kode=oke;
-	
+
+	kode(&oke[i]);
+		simpan.open(n_file.c_str(),ios::app);
 		simpan<<datapelanggan[i].nama<<endl<<datapelanggan[i].layanan<<endl<<datapelanggan[i].lama<<endl
-			  <<datapelanggan[i].berat<<endl<<datapelanggan[i].harga<<endl<<datapelanggan[i].kode<<endl;
+			  <<datapelanggan[i].berat<<endl<<datapelanggan[i].harga<<endl<<oke[i]<<endl;
 		simpan.close();
 		
 	}
