@@ -10,7 +10,7 @@ typedef struct{
 	int layanan, lama;
 	float berat, harga;
 	char kode[3];	
-}pelanggan[banyakdata];
+}pelanggan;
 string username,pass,n_file;
 char choose,bersihkan;
 int pilih,tambahdata,pilout,unik;
@@ -120,9 +120,7 @@ void input(){
 											cout<<"Ada input yang salah";
 		simpan<<datapelanggan[i].nama<<endl<<datapelanggan[i].layanan<<endl<<datapelanggan[i].lama<<endl
 			  <<datapelanggan[i].berat<<endl<<datapelanggan[i].harga<<endl;
-		simpan.close();
-		
-	}
+	}simpan.close();
 }
 void add(){
 	cout<<"Tambahan data"<<endl;
