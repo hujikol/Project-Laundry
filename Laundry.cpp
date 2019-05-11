@@ -21,19 +21,24 @@ void ambil_data(){
 	string carifile;
 	cout<<"Nama file yang akan diambil : ";cin>>carifile;
 ifstream ambil(carifile.c_str());
-	pelanggan data[banyakdata];
-	banyakdata=1;
-	while(!ambil.eof()){
-		getline(cin,data[j].nama);
-		cin>>data[j].layanan;
-		cin>>data[j].lama;
-		cin>>data[j].berat;
-		cin>>data[j].harga;cin.ignore();
-		cin>>data[j].kode;
-		j++;
-		banyakdata=banyakdata+1;
-	}ambil.close();
-}
+	for(int i=0;i<100;i++){
+		ambil>>data[i].nama;
+		if(ambil.eof())
+		break;
+		ambil>>data[i].layanan;
+		ambil>>data[i].lama;
+		ambil>>data[i].berat;
+		ambil>>data[i].harga;
+		
+	}
+	//ini seharusnya (i<banyak) lha variabel banyak perlu ditangani
+	for (int i=0;i<3;i++){
+	cout<<data[i].nama<<endl;
+	cout<<data[i].layanan<<endl;
+	cout<<data[i].lama<<endl;
+	cout<<data[i].berat<<endl;
+	cout<<data[i].harga<<endl;}
+}ambil.close();
 
 void login (){
 	do{
