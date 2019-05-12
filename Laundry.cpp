@@ -212,6 +212,30 @@ void ngesort(){
 		break;
 		case 2 :
 			cout<<"Straight Insertion Sort mengurutkan berat laundry pelanggan"<<endl;
+			for(int i=1;i<banyakdata;i++){
+				tempnama=datapelanggan[i].nama;
+				templayanan=datapelanggan[i].layanan;
+				templama=datapelanggan[i].lama;
+				tempberat=datapelanggan[i].berat;
+				tempharga=datapelanggan[i].harga;
+//				tempkode=datapelanggan[i].kode;
+				k=i-1;
+				while((tempberat>datapelanggan[k].berat) && (k>=0)){
+					datapelanggan[k+1].nama=datapelanggan[k].nama;
+					datapelanggan[k+1].layanan=datapelanggan[k].layanan;
+					datapelanggan[k+1].lama=datapelanggan[k].lama;
+					datapelanggan[k+1].berat=datapelanggan[k].berat;
+					datapelanggan[k+1].harga=datapelanggan[k].harga;
+//					datapelanggan[k+1].kode=datapelanggan[i].kode;
+					k=k-1;
+						datapelanggan[k+1].nama=tempnama;
+						datapelanggan[k+1].layanan=templayanan;
+						datapelanggan[k+1].lama=templama;
+						datapelanggan[k+1].berat=tempberat;
+						datapelanggan[k+1].harga=tempharga;
+						datapelanggan[k+1].kode=tempkode;
+				}
+			}
 		break;
 	}
 }
