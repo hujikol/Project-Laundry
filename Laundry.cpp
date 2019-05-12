@@ -16,30 +16,37 @@ pelanggan datapelanggan[100];
 string username,pass,n_file;
 char choose,bersihkan;
 int pilih,tambahdata,pilout,unik,log;
-
+string carifile;
 void ambil_data(){
-	int j=0;
-	string carifile;
-	cout<<"Nama file yang akan diambil : ";cin>>carifile;
+	int j=0,a=0;
+	string hapus;
+	if(a==0){
+		cout<<"Nama file yang akan diambil : ";cin>>carifile;
+		a+=1;
+	}
 ifstream ambil(carifile.c_str());
-	for(int i=0;i<100;i++){
-		ambil>>data[i].nama;
+	for(int i=0;i<3;i++){
+		ambil>>datapelanggan[i].nama;
 		if(ambil.eof())
 		break;
-		ambil>>data[i].layanan;
-		ambil>>data[i].lama;
-		ambil>>data[i].berat;
-		ambil>>data[i].harga;
-		
+		ambil>>datapelanggan[i].layanan;
+		ambil>>datapelanggan[i].lama;
+		ambil>>datapelanggan[i].berat;
+		ambil>>datapelanggan[i].harga;
+		ambil>>datapelanggan[i].kode;
+		getline(ambil,hapus);
+		banyakdata=banyakdata+1;
 	}
 	//ini seharusnya (i<banyak) lha variabel banyak perlu ditangani
 	for (int i=0;i<3;i++){
-	cout<<data[i].nama<<endl;
-	cout<<data[i].layanan<<endl;
-	cout<<data[i].lama<<endl;
-	cout<<data[i].berat<<endl;
-	cout<<data[i].harga<<endl;}
-}ambil.close();
+	cout<<datapelanggan[i].nama<<endl;
+	cout<<datapelanggan[i].layanan<<endl;
+	cout<<datapelanggan[i].lama<<endl;
+	cout<<datapelanggan[i].berat<<endl;
+	cout<<datapelanggan[i].harga<<endl;
+	cout<<datapelanggan[i].kode<<endl;
+	}ambil.close();
+}
 
 void login (){
 	do{
@@ -91,8 +98,7 @@ void input(){
 		string oke[banyakdata];
 	for(int i = 0;i<banyakdata;i++){
 		cout<<endl<<i+1<<"	"<<"Nama = ";
-		cin.ignore();
-		getline(cin,datapelanggan[i].nama);
+		cin>>datapelanggan[i].nama;
 		cout<<"	Pilih layanan"<<endl;
 		cout<<"		1.Clean & Clear"<<endl<<"		2.Cuci & Keringkan"<<endl;
 		cout<<"		3.Setrika"<<endl;
@@ -219,7 +225,7 @@ void ngesort(){
 				tempberat=datapelanggan[i].berat;
 				tempharga=datapelanggan[i].harga;
 //				tempkode=datapelanggan[i].kode;
-				k=i-1;
+				int k=i-1;
 				while((tempberat>datapelanggan[k].berat) && (k>=0)){
 					datapelanggan[k+1].nama=datapelanggan[k].nama;
 					datapelanggan[k+1].layanan=datapelanggan[k].layanan;
@@ -241,7 +247,9 @@ void ngesort(){
 }
 
 void output(){
-	string unik,n_cari; int posisi,k,pilih;
+	string unik,nama; int posisi,k,pilih;
+	bool ketemu;
+	ketemu=false;
 	system("CLS");
 	cout<<"====================================================================\n"
 		<<"============================ Menu Output ===========================\n"
@@ -253,117 +261,92 @@ void output(){
 		switch(pilout){
 			case 1:
 				for(int i=0;i<banyakdata;i++){
-					cout<<i+1<<".	Nama = "<<data_plg[i].nama<<endl;
+					cout<<i+1<<".	Nama = "<<datapelanggan[i].nama<<endl;
 					cout<<"	Pesanan dan Layanan\n";
-						if(data_plg[i].layanan==1){
+						if(datapelanggan[i].layanan==1){
 							cout<<"		Clean & Clear";
 						}
-						else if(data_plg[i].layanan==2){
+						else if(datapelanggan[i].layanan==2){
 							cout<<"		Cuci & Keringkan";
 						}
-						else if(data_plg[i].layanan==3){
+						else if(datapelanggan[i].layanan==3){
 							cout<<"		Setrika";
 						}
 						else {
 							cout<<"	Layanan Tidak diketahui";
 						}
 	
-						if(data_plg[i].lama==1){
+						if(datapelanggan[i].lama==1){
 							cout<<", Reguler (3 Hari)"<<endl;
 						}
-						else if(data_plg[i].lama==2){
+						else if(datapelanggan[i].lama==2){
 							cout<<", One Day Service"<<endl;
 						}
-						else if(data_plg[i].lama==3){
+						else if(datapelanggan[i].lama==3){
 							cout<<", Super Kilat"<<endl;
 						}
 						else {
 							cout<<", Laundry Tidak akan selesai"<<endl;
 						}
-					cout<<"	Berat laundry = "<<data_plg[i].berat<<" Kg"<<endl;
-					cout<<"	Total Bayar = Rp "<<data_plg[i].harga<<"-,\n";
-					cout<<"	Kode UNIK = "<<data_plg[i].kode<<endl;
+					cout<<"	Berat laundry = "<<datapelanggan[i].berat<<" Kg"<<endl;
+					cout<<"	Total Bayar = Rp "<<datapelanggan[i].harga<<"-,\n";
+					cout<<"	Kode UNIK = "<<datapelanggan[i].kode<<endl;
 				}
 			break;
 			
 			case 2: cout<<"\nMencari berdasarkan apa?\n1. Nama\n2. Kode Unik\nPilihan";cin>>pilih;
 				if(pilih==1){
-				cout<<"Masukkan Nama yang Dicari = ";cin.ignore();getline(cin,n_cari);
-				while(n_cari!=data_plg[k].nama&&k<banyakdata){
-					if(n_cari==data_plg[k].nama){
-					posisi=k;
+					cout<<"-----------------------------------------------\n";
+					cout<<"Masukan nama yang dicari : ";cin.ignore();getline(cin,nama);
+					cout<<"-----------------------------------------------\n";
+					for (int i = 0; i <k ; i++){
+						if (datapelanggan[i].nama==nama){ 
+							k=k+1;
+						}
 					}
-					k++;
-				}
-					cout<<"	Data Saudara "<<data_plg[posisi].nama<<endl;
-					cout<<"	Pesanan dan Layanan\n";
-						if(data_plg[posisi].layanan==1){
-							cout<<"		Clean & Clear";
-						}
-						else if(data_plg[posisi].layanan==2){
-							cout<<"		Cuci & Keringkan";
-						}
-						else if(data_plg[posisi].layanan==3){
-							cout<<"		Setrika";
-						}
-						else {
-							cout<<"	Layanan Tidak diketahui";
-						}
-	
-						if(data_plg[posisi].lama==1){
-							cout<<", Reguler (3 Hari)"<<endl;
-						}
-						else if(data_plg[posisi].lama==2){
-							cout<<", One Day Service"<<endl;
-						}
-						else if(data_plg[posisi].lama==3){
-							cout<<", Super Kilat"<<endl;
-						}
-						else {
-							cout<<", Laundry Tidak akan selesai"<<endl;
-						}
-					cout<<"	Berat laundry = "<<data_plg[posisi].berat<<" Kg"<<endl;
-					cout<<"	Total Bayar = Rp "<<data_plg[posisi].harga<<"-,\n";
-					cout<<"	Kode UNIK = "<<data_plg[posisi].kode<<endl;
+					if (k==0){
+						cout<<"Nama yang anda cari tidak ada dalam data sensus";
+						cout<<"\n-----------------------------------------------\n";
+					}
+
 				}
 				else if(pilih==2){cout<<"Masukkan Kode UNIK = ";
-				cin>>unik;
-				while(unik!=data_plg[k].kode&&k<banyakdata){
-					if(unik==data_plg[k].kode){
+				cin.ignore();getline(cin,unik);
+				for(k=0;k<3;k++){
+					if(unik==datapelanggan[k].kode){
 					posisi=k;
 					}
-					k++;
 				}
-					cout<<"	Data Saudara "<<data_plg[posisi].nama<<endl;
+					cout<<"	Data Saudara "<<datapelanggan[k].nama<<endl;
 					cout<<"	Pesanan dan Layanan\n";
-						if(data_plg[posisi].layanan==1){
+						if(datapelanggan[k].layanan==1){
 							cout<<"		Clean & Clear";
 						}
-						else if(data_plg[posisi].layanan==2){
+						else if(datapelanggan[k].layanan==2){
 							cout<<"		Cuci & Keringkan";
 						}
-						else if(data_plg[posisi].layanan==3){
+						else if(datapelanggan[k].layanan==3){
 							cout<<"		Setrika";
 						}
 						else {
 							cout<<"	Layanan Tidak diketahui";
 						}
 	
-						if(data_plg[posisi].lama==1){
+						if(datapelanggan[k].lama==1){
 							cout<<", Reguler (3 Hari)"<<endl;
 						}
-						else if(data_plg[posisi].lama==2){
+						else if(datapelanggan[k].lama==2){
 							cout<<", One Day Service"<<endl;
 						}
-						else if(data_plg[posisi].lama==3){
+						else if(datapelanggan[k].lama==3){
 							cout<<", Super Kilat"<<endl;
 						}
 						else {
 							cout<<", Laundry Tidak akan selesai"<<endl;
 						}
-					cout<<"	Berat laundry = "<<data_plg[posisi].berat<<" Kg"<<endl;
-					cout<<"	Total Bayar = Rp "<<data_plg[posisi].harga<<"-,\n";
-					cout<<"	Kode UNIK = "<<data_plg[posisi].kode<<endl;
+					cout<<"	Berat laundry = "<<datapelanggan[k].berat<<" Kg"<<endl;
+					cout<<"	Total Bayar = Rp "<<datapelanggan[k].harga<<"-,\n";
+					cout<<"	Kode UNIK = "<<datapelanggan[k].kode<<endl;
 				}
 			break;
 			
@@ -390,7 +373,7 @@ system("CLS");
 		<<"======================== Welcome to Main Menu =======================\n"
 		<<"=====================================================================\n"
 		<<"Choose what you want to do next";
-	cout<<"\n1. Input data\n2. Check data\n3. Exit\nWhat you want to do next = ";
+	cout<<"\n1. Input data\n2. Check data\n3. Sorting\n4. Exit\nWhat you want to do next = ";
 	cin>>pilih;
 		switch (pilih){
 		case 1 :
@@ -400,6 +383,9 @@ system("CLS");
 			output();
 		break;
 		case 3:
+			ngesort();
+		break;
+		case 4:
 			cout<<"============================ Terima Kasih ============================";
 			return 0;
 		break;
