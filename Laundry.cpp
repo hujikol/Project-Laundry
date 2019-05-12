@@ -503,5 +503,5 @@ system("CLS");
 			cin>>choose;
 				system("CLS");
 		if(choose=='y'||choose=='Y')main();
-	
+		else cout<<"============================ Terima Kasih ============================";
 }
