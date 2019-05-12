@@ -12,6 +12,7 @@ typedef struct{
 	int layanan, lama;
 	float berat, harga;	
 }pelanggan;
+pelanggan datapelanggan[100];
 string username,pass,n_file;
 char choose,bersihkan;
 int pilih,tambahdata,pilout,unik,log;
@@ -87,7 +88,6 @@ void input(){
 	cin>>n_file; 
 	cout<<"Banyak data = ";
 	cin>>bnyk_data;banyakdata+=bnyk_data;
-	pelanggan datapelanggan[banyakdata];
 		string oke[banyakdata];
 	for(int i = 0;i<banyakdata;i++){
 		cout<<endl<<i+1<<"	"<<"Nama = ";
@@ -166,6 +166,9 @@ void input(){
 void ngesort(){
 	ambil_data();
 	int pilihansort;
+	string tempnama,tempkode;
+	int templama,templayanan;
+	float tempberat,tempharga;
 	cout<<"Menu Sorting/Mengurutkan data"<<endl;
 	cout<<"Pilih yang hendak di sorting"<<endl;
 		cout<<"	1.Nama Pelanggan"<<endl;
@@ -173,10 +176,42 @@ void ngesort(){
 	cout<<"Pil : ";cin>>pilihansort;
 	switch(pilihansort){
 		case 1 : 
+			cout<<"Bubble sort dengan nama pelanggan"<<endl;
+			for (int i = 0; i < banyakdata-1; i++)
+						{
+							for (int j = 0; j <(banyakdata-1-i);j++)
+							{
+								if (datapelanggan[j].nama>datapelanggan[j+1].nama)
+								{
+									tempnama=datapelanggan[j].nama;
+									templayanan=datapelanggan[j].layanan;
+									templama=datapelanggan[j].lama;
+									tempberat=datapelanggan[j].berat;
+									tempharga=datapelanggan[j].harga;
+									tempkode=datapelanggan[j].kode;
+									
+									datapelanggan[j].nama=datapelanggan[j+1].nama;
+									datapelanggan[j].layanan=datapelanggan[j+1].layanan;
+									datapelanggan[j].lama=datapelanggan[j+1].lama;
+									datapelanggan[j].berat=datapelanggan[j+1].berat;
+									datapelanggan[j].harga=datapelanggan[j+1].harga;
+									datapelanggan[j].kode=datapelanggan[j+1].kode;
+									
+									datapelanggan[j+1].nama=tempnama;
+									datapelanggan[j+1].layanan=templayanan;
+									datapelanggan[j+1].lama=templama;
+									datapelanggan[j+1].berat=tempberat;
+									datapelanggan[j+1].harga=tempharga;
+									datapelanggan[j+1].kode=tempkode;
+								}
+							}
+						}
+									
+									
 			
 		break;
 		case 2 :
-		
+			cout<<"Straight Insertion Sort mengurutkan berat laundry pelanggan"<<endl;
 		break;
 	}
 }
@@ -191,7 +226,6 @@ void output(){
 	cout<<"\n1. Tampilkan Semua Data\n"<<"2. Tampilkan Data Pilihan\n";
 	cout<<"Pilihan : ";
 	cin>>pilout;
-	pelanggan data_plg[banyakdata];
 		switch(pilout){
 			case 1:
 				for(int i=0;i<banyakdata;i++){
