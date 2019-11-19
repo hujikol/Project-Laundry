@@ -1,5 +1,5 @@
 # Laundry Management System
-Tugasakhir Semester 2 Praktikum Algoritma Pemrograman 2
+Tugas akhir Semester 2 Praktikum Algoritma Pemrograman 2
 
 Feature :
 - Admin login
