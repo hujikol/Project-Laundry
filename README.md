@@ -1,5 +1,6 @@
 # Laundry Management System
-Tugas akhir Semester 2 Praktikum Algoritma Pemrograman 2
+Tugas akhir Semester 2, Praktikum Algoritma Pemrograman 2
+Dibuat menggunakan bahasa pemrograman C++
 
 Feature :
 - Admin login
